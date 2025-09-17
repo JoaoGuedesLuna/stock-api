@@ -5,7 +5,7 @@ export type WarehouseDocument = Warehouse & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Warehouse {
-  @Prop({ unique: true, required: true })
+  @Prop({ required: true })
   name?: string;
 
   @Prop({ required: true })
