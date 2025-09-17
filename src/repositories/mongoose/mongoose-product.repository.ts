@@ -22,12 +22,18 @@ export class MongooseProductRepository extends ProductRepository {
     await this.productModel.findByIdAndDelete(id).exec();
   }
 
-  async findById(id: string): Promise<Product | null> {
-    return this.productModel.findById(id).exec();
+  async existsById(id: string): Promise<boolean> {
+    const exists = await this.productModel.exists({ _id: id }).exec();
+    return !!exists;
   }
 
-  async findBySku(sku: string): Promise<Product | null> {
-    return this.productModel.findOne({ sku }).exec();
+  async existsBySku(sku: string): Promise<boolean> {
+    const exists = await this.productModel.exists({ sku }).exec();
+    return !!exists;
+  }
+
+  async findById(id: string): Promise<Product | null> {
+    return this.productModel.findById(id).exec();
   }
 
   async updateById(id: string, product: Product): Promise<Product | null> {
