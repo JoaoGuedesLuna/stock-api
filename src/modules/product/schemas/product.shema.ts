@@ -6,19 +6,19 @@ export type ProductDocument = Product & Document;
 @Schema({ timestamps: true, versionKey: false })
 export class Product {
   @Prop({ unique: true, required: true })
-  sku: string;
+  sku?: string;
 
   @Prop({ required: true })
-  name: string;
+  name?: string;
 
   @Prop({ required: true })
-  description: string;
+  description?: string;
 
   @Prop({ required: true })
-  unit: string;
+  unit?: string;
 
   @Prop({ required: true })
-  minStock: number;
+  minStock?: number;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
