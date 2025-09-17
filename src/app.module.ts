@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ProductModule } from './modules/product/product.module';
+import { ProductModule, WarehouseModule } from './modules';
 
 @Module({
   imports: [
@@ -14,7 +14,8 @@ import { ProductModule } from './modules/product/product.module';
         dbName: configService.getOrThrow('MONGODB_DB')
       })
     }),
-    ProductModule
+    ProductModule,
+    WarehouseModule
   ]
 })
 export class AppModule {}
