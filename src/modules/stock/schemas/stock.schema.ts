@@ -5,6 +5,8 @@ export type StockDocument = Stock & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Stock {
+  _id?: Types.ObjectId;
+
   @Prop({ type: Types.ObjectId, ref: 'Product', required: true })
   product?: Types.ObjectId;
 
