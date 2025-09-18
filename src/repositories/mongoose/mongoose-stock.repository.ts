@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { StockRepository } from '../stock.repository';
 import { Stock } from '../../modules/stock/schemas';
 import { StockDocument } from '../../modules/stock/schemas/stock.schema';
@@ -27,7 +27,7 @@ export class MongooseStockRepository extends StockRepository {
   }
 
   findByProductIdAndWarehouseId(productId: string, warehouseId: string): Promise<Stock | null> {
-    return this.stockModel.findOne({ product: productId, warehouse: warehouseId }).populate('product').exec();
+    return this.stockModel.findOne({ product: new Types.ObjectId(productId), warehouse: new Types.ObjectId(warehouseId) }).populate('product').exec();
   }
 
   async updateById(id: string, stock: Stock): Promise<Stock | null> {
