@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose';
 import { StockRepository } from '../stock.repository';
 import { Stock } from '../../modules/stock/schemas';
 import { StockDocument } from '../../modules/stock/schemas/stock.schema';
+import { Product } from '../../modules/product/schemas';
 
 @Injectable()
 export class MongooseStockRepository extends StockRepository {
@@ -23,8 +24,18 @@ export class MongooseStockRepository extends StockRepository {
   }
 
   async existsByProductIdAndWarehouseId(productId: string, warehouseId: string): Promise<boolean> {
-    const stock = await this.stockModel.exists({ product: productId, warehouse: warehouseId }).exec();
+    const stock = await this.stockModel
+      .exists({ product: new Types.ObjectId(productId), warehouse: new Types.ObjectId(warehouseId) })
+      .exec();
     return !!stock;
+  }
+
+  async findBelowMinimumStock(): Promise<Stock[]> {
+    const stocks = (await this.stockModel.find().populate('product').lean().exec()) as (Stock & { product: Product })[];
+
+    return stocks.filter((stock) => {
+      return stock.quantity! < stock.product.minStock!;
+    });
   }
 
   async findById(id: string): Promise<Stock | null> {

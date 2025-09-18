@@ -43,6 +43,10 @@ export class StockService {
     return this.stockRepository.existsByProductIdAndWarehouseId(productId, warehouseId);
   }
 
+  async findBelowMinimumStock(): Promise<Stock[]> {
+    return this.stockRepository.findBelowMinimumStock();
+  }
+
   async findById(id: string): Promise<Stock | null> {
     const stock = await this.stockRepository.findById(id);
 

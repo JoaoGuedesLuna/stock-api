@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MovementModule, ProductModule, StockModule, WarehouseModule } from './modules';
+import { AlertModule, MovementModule, ProductModule, StockModule, WarehouseModule } from './modules';
 
 @Module({
   imports: [
@@ -14,6 +14,7 @@ import { MovementModule, ProductModule, StockModule, WarehouseModule } from './m
         dbName: configService.getOrThrow('MONGODB_DB')
       })
     }),
+    AlertModule,
     MovementModule,
     ProductModule,
     StockModule,
