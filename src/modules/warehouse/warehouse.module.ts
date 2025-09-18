@@ -16,6 +16,7 @@ import { MongooseWarehouseRepository } from '../../repositories/mongoose/mongoos
       provide: WarehouseRepository,
       useClass: MongooseWarehouseRepository
     }
-  ]
+  ],
+  exports: [WarehouseService]
 })
 export class WarehouseModule {}

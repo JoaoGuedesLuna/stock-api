@@ -16,6 +16,7 @@ import { ProductSchema } from './schemas/product.shema';
       provide: ProductRepository,
       useClass: MongooseProductRepository
     }
-  ]
+  ],
+  exports: [ProductService]
 })
 export class ProductModule {}
