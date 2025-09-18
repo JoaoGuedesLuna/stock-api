@@ -39,6 +39,10 @@ export class StockService {
     return `Stock ${id} deleted.`;
   }
 
+  async existsByProductIdAndWarehouseId(productId: string, warehouseId: string): Promise<boolean> {
+    return this.stockRepository.existsByProductIdAndWarehouseId(productId, warehouseId);
+  }
+
   async findById(id: string): Promise<Stock | null> {
     const stock = await this.stockRepository.findById(id);
 
