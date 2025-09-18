@@ -22,12 +22,20 @@ export class MongooseStockRepository extends StockRepository {
     await this.stockModel.findByIdAndDelete(id).exec();
   }
 
+  async existsByProductIdAndWarehouseId(productId: string, warehouseId: string): Promise<boolean> {
+    const stock = await this.stockModel.exists({ product: productId, warehouse: warehouseId }).exec();
+    return !!stock;
+  }
+
   async findById(id: string): Promise<Stock | null> {
     return this.stockModel.findById(id).populate('product').exec();
   }
 
   findByProductIdAndWarehouseId(productId: string, warehouseId: string): Promise<Stock | null> {
-    return this.stockModel.findOne({ product: new Types.ObjectId(productId), warehouse: new Types.ObjectId(warehouseId) }).populate('product').exec();
+    return this.stockModel
+      .findOne({ product: new Types.ObjectId(productId), warehouse: new Types.ObjectId(warehouseId) })
+      .populate('product')
+      .exec();
   }
 
   async updateById(id: string, stock: Stock): Promise<Stock | null> {
