@@ -1,15 +1,14 @@
-import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, Min } from 'class-validator';
 
 export class CreateStockDto {
   @ApiProperty()
   @IsNotEmpty()
-  productId: Types.ObjectId;
+  productId: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  warehouseId: Types.ObjectId;
+  warehouseId: string;
 
   @ApiProperty()
   @Min(0)
