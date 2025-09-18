@@ -18,6 +18,7 @@ import { WarehouseModule } from '../warehouse/warehouse.module';
       provide: StockRepository,
       useClass: MongooseStockRepository
     }
-  ]
+  ],
+  exports: [StockService]
 })
 export class StockModule {}
