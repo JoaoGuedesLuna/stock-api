@@ -5,13 +5,16 @@ import { AlertModule, MovementModule, ProductModule, StockModule, WarehouseModul
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`
+    }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         uri: configService.getOrThrow('MONGODB_URI'),
-        dbName: configService.getOrThrow('MONGODB_DB')
+        dbName: configService.getOrThrow('MONGODB_DATABASE')
       })
     }),
     AlertModule,
