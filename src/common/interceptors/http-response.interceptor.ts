@@ -1,23 +1,18 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { HttpResponse, ResponseData } from '@/common/interfaces';
 import { Observable } from 'rxjs';
+import { getRequestResponse } from '@/common/utils';
 import { Request, Response } from 'express';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class ResponseInterceptor<T> implements NestInterceptor<T, HttpResponse<T>> {
+export class HttpResponseInterceptor<T> implements NestInterceptor<T, HttpResponse<T>> {
   intercept(context: ExecutionContext, next: CallHandler<T>): Observable<HttpResponse<T>> {
-    const { req, res } = this.getRequestResponse(context);
+    const { req, res } = getRequestResponse(context);
 
     return next
       .handle()
       .pipe(map((data: T | ResponseData<T> | null | undefined) => this.formatResponse(data, req, res)));
-  }
-
-  private getRequestResponse(context: ExecutionContext) {
-    const request = context.switchToHttp().getRequest<Request>();
-    const response = context.switchToHttp().getResponse<Response>();
-    return { req: request, res: response };
   }
 
   private formatResponse(data: T | ResponseData<T> | null | undefined, req: Request, res: Response): HttpResponse<T> {

@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@/app.module';
 import { setupSwagger } from '@/config/swagger.config';
-import { ResponseInterceptor } from '@/common/interceptors';
+import { HttpResponseInterceptor } from '@/common/interceptors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,7 +10,7 @@ async function bootstrap() {
 
   setupSwagger(app);
 
-  app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalInterceptors(new HttpResponseInterceptor());
 
   await app.listen(process.env.APP_PORT ?? 3000, '0.0.0.0');
 }
