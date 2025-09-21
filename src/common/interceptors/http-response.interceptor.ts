@@ -12,10 +12,16 @@ export class HttpResponseInterceptor<T> implements NestInterceptor<T, HttpRespon
 
     return next
       .handle()
-      .pipe(map((data: T | ResponseData<T> | null | undefined) => this.formatResponse(data, req, res)));
+      .pipe(
+        map((data: T | ResponseData<T> | null | undefined) => this.formatResponse(data, req, res))
+      );
   }
 
-  private formatResponse(data: T | ResponseData<T> | null | undefined, req: Request, res: Response): HttpResponse<T> {
+  private formatResponse(
+    data: T | ResponseData<T> | null | undefined,
+    req: Request,
+    res: Response
+  ): HttpResponse<T> {
     const extractedData = this.extractData(data);
     const message = this.extractMessage(data) ?? this.defaultMessage(req.method);
 
