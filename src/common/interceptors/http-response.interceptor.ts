@@ -1,7 +1,7 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { HttpResponse, ResponseData } from '@/common/interfaces';
 import { Observable } from 'rxjs';
-import { getRequestResponse } from '@/common/utils';
+import { getRequestResponse, hasProperty } from '@/common/utils/http-context.util';
 import { Request, Response } from 'express';
 import { map } from 'rxjs/operators';
 
@@ -36,12 +36,16 @@ export class HttpResponseInterceptor<T> implements NestInterceptor<T, HttpRespon
   }
 
   private extractData(data: T | ResponseData<T> | null | undefined): T | undefined {
-    if (data && typeof data === 'object' && 'data' in data) return data.data ?? undefined;
+    if (hasProperty(data, 'data')) {
+      return data.data !== null ? (data.data as T | undefined) : undefined;
+    }
     return data as T | undefined;
   }
 
   private extractMessage(data: T | ResponseData<T> | null | undefined): string | undefined {
-    if (data && typeof data === 'object' && 'message' in data) return data.message ?? undefined;
+    if (hasProperty(data, 'message', (p): p is string => typeof p === 'string')) {
+      return data.message;
+    }
     return undefined;
   }
 
