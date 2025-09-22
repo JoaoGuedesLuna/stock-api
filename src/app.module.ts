@@ -1,7 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AlertModule, MovementModule, ProductModule, StockModule, WarehouseModule } from './modules';
+import {
+  AlertModule,
+  MovementModule,
+  ProductModule,
+  StockModule,
+  WarehouseModule
+} from '@/modules';
 
 @Module({
   imports: [

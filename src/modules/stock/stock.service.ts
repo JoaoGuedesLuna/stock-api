@@ -61,7 +61,9 @@ export class StockService {
     const stock = await this.stockRepository.findByProductIdAndWarehouseId(productId, warehouseId);
 
     if (!stock) {
-      throw new BadRequestException(`Stock with ProductId ${productId} and WarehouseId ${warehouseId} not found`);
+      throw new BadRequestException(
+        `Stock with ProductId ${productId} and WarehouseId ${warehouseId} not found`
+      );
     }
 
     return stock;

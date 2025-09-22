@@ -10,7 +10,11 @@ import { ProductModule } from '../product/product.module';
 import { WarehouseModule } from '../warehouse/warehouse.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Stock.name, schema: StockSchema }]), ProductModule, WarehouseModule],
+  imports: [
+    MongooseModule.forFeature([{ name: Stock.name, schema: StockSchema }]),
+    ProductModule,
+    WarehouseModule
+  ],
   controllers: [StockController],
   providers: [
     StockService,

@@ -7,7 +7,8 @@ export class MovementMapper {
     return {
       ...movementDto,
       product: 'productId' in movementDto ? new Types.ObjectId(movementDto.productId) : undefined,
-      warehouse: 'warehouseId' in movementDto ? new Types.ObjectId(movementDto.warehouseId) : undefined
+      warehouse:
+        'warehouseId' in movementDto ? new Types.ObjectId(movementDto.warehouseId) : undefined
     };
   }
 }

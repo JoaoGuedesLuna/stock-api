@@ -25,16 +25,21 @@ export class MongooseStockRepository extends StockRepository {
 
   async existsByProductIdAndWarehouseId(productId: string, warehouseId: string): Promise<boolean> {
     const stock = await this.stockModel
-      .exists({ product: new Types.ObjectId(productId), warehouse: new Types.ObjectId(warehouseId) })
+      .exists({
+        product: new Types.ObjectId(productId),
+        warehouse: new Types.ObjectId(warehouseId)
+      })
       .exec();
     return !!stock;
   }
 
   async findBelowMinimumStock(): Promise<Stock[]> {
-    const stocks = (await this.stockModel.find().populate('product').lean().exec()) as (Stock & { product: Product })[];
+    const stocks = (await this.stockModel.find().populate('product').lean().exec()) as (Stock & {
+      product: Product;
+    })[];
 
     return stocks.filter((stock) => {
-      return stock.quantity! < stock.product.minStock!;
+      return stock.quantity < stock.product.minStock;
     });
   }
 
@@ -44,7 +49,10 @@ export class MongooseStockRepository extends StockRepository {
 
   findByProductIdAndWarehouseId(productId: string, warehouseId: string): Promise<Stock | null> {
     return this.stockModel
-      .findOne({ product: new Types.ObjectId(productId), warehouse: new Types.ObjectId(warehouseId) })
+      .findOne({
+        product: new Types.ObjectId(productId),
+        warehouse: new Types.ObjectId(warehouseId)
+      })
       .populate('product')
       .exec();
   }
