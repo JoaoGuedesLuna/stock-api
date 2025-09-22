@@ -1,4 +1,4 @@
-export interface HttpResponse<T> {
+export interface HttpResponse<T = undefined> {
   success: boolean;
   status: number;
   timestamp: string;

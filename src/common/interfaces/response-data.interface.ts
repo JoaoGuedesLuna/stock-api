@@ -1,4 +1,4 @@
 export interface ResponseData<T = undefined> {
-  data?: T | null;
+  data?: T;
   message?: string;
 }
