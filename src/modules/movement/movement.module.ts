@@ -9,7 +9,10 @@ import { MongooseMovementRepository } from '../../repositories/mongoose/mongoose
 import { StockModule } from '../stock/stock.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Movement.name, schema: MovementSchema }]), StockModule],
+  imports: [
+    MongooseModule.forFeature([{ name: Movement.name, schema: MovementSchema }]),
+    StockModule
+  ],
   controllers: [MovementController],
   providers: [
     MovementService,

@@ -26,7 +26,10 @@ export class MovementController {
   @Get()
   @ApiQuery({ name: 'productId', required: true, type: String })
   @ApiQuery({ name: 'warehouseId', required: true, type: String })
-  findByProductIdAndWarehouseId(@Query('productId') productId: string, @Query('warehouseId') warehouseId: string) {
+  findByProductIdAndWarehouseId(
+    @Query('productId') productId: string,
+    @Query('warehouseId') warehouseId: string
+  ) {
     return this.movementService.findByProductIdAndWarehouseId(productId, warehouseId);
   }
 

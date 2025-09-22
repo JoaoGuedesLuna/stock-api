@@ -1,9 +1,11 @@
 networks:
   inventory-backend:
+    name: inventory-backend
     driver: bridge
 
 volumes:
   inventory-mongo-data:
+    name: inventory-mongo-data
 
 services:
   mongodb:

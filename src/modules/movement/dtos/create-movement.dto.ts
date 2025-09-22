@@ -5,19 +5,19 @@ import { MovementType } from '../enums/movement-type.enum';
 export class CreateMovementDto {
   @ApiProperty()
   @IsNotEmpty()
-  productId: string;
+  productId?: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  warehouseId: string;
+  warehouseId?: string;
 
   @ApiProperty({ enum: MovementType })
   @IsEnum(MovementType)
-  type: MovementType;
+  type?: MovementType;
 
   @ApiProperty()
   @Min(1)
-  quantity: number;
+  quantity?: number;
 
   @ApiProperty({ required: false })
   @IsOptional()

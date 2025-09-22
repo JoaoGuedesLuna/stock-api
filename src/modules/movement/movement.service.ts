@@ -16,7 +16,10 @@ export class MovementService {
   async create(createMovementDto: CreateMovementDto): Promise<Movement> {
     const { productId, warehouseId, type, quantity } = createMovementDto;
 
-    const existStock = await this.stockService.existsByProductIdAndWarehouseId(productId, warehouseId);
+    const existStock = await this.stockService.existsByProductIdAndWarehouseId(
+      productId,
+      warehouseId
+    );
 
     if (!existStock) {
       if (type === MovementType.OUT) {
@@ -26,13 +29,16 @@ export class MovementService {
     } else {
       const stock = await this.stockService.findByProductIdAndWarehouseId(productId, warehouseId);
 
-      const updatedStockQuantity = type === MovementType.IN ? stock.quantity! + quantity : stock.quantity! - quantity;
+      const updatedStockQuantity =
+        type === MovementType.IN ? stock.quantity + quantity : stock.quantity - quantity;
 
       if (updatedStockQuantity < 0) {
         throw new BadRequestException('Insufficient stock quantity');
       }
 
-      await this.stockService.updateById(stock._id!.toHexString(), { quantity: updatedStockQuantity });
+      await this.stockService.updateById(stock._id.toHexString(), {
+        quantity: updatedStockQuantity
+      });
     }
 
     return this.movementRepository.create(MovementMapper.toSchema(createMovementDto));
@@ -59,10 +65,15 @@ export class MovementService {
   }
 
   async findByProductIdAndWarehouseId(productId: string, warehouseId: string) {
-    const movement = await this.movementRepository.findByProductIdAndWarehouseId(productId, warehouseId);
+    const movement = await this.movementRepository.findByProductIdAndWarehouseId(
+      productId,
+      warehouseId
+    );
 
     if (!movement) {
-      throw new BadRequestException(`Movement with ProductId ${productId} and WarehouseId ${warehouseId} not found`);
+      throw new BadRequestException(
+        `Movement with ProductId ${productId} and WarehouseId ${warehouseId} not found`
+      );
     }
 
     return movement;

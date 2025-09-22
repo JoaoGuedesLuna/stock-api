@@ -28,7 +28,10 @@ export class MongooseMovementRepository extends MovementRepository {
 
   findByProductIdAndWarehouseId(productId: string, warehouseId: string): Promise<Movement | null> {
     return this.movementModel
-      .findOne({ product: new Types.ObjectId(productId), warehouse: new Types.ObjectId(warehouseId) })
+      .findOne({
+        product: new Types.ObjectId(productId),
+        warehouse: new Types.ObjectId(warehouseId)
+      })
       .populate('product')
       .populate('warehouse')
       .exec();
